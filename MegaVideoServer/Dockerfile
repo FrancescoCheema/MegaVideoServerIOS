@@ -17,9 +17,7 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/setup_23.x | bash - && \
     apt-get install -y nodejs
 
-RUN docker build -t megacmd /MegaVideoServer \
-    docker run -p 8080:8080 megacmd
-
+RUN npm install
     
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD mega-cmd-server & npm start
