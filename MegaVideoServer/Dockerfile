@@ -1,5 +1,3 @@
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-
 FROM ubuntu:noble
 
 #Building MegaCMD
