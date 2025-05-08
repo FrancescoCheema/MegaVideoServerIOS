@@ -12,6 +12,18 @@ RUN apt-get update && apt-get install -y curl \
 
 CMD ["mega-cmd-server"]
 
-#Build image with Docker
-RUN Docker build -t megacmd /MegaVideoServer
-    Docker start megacmd
+#Install Node.js
+
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    npm
+RUN npm install npm@latest -g && \
+    npm install n -g && \
+    n latest
+
+RUN docker build -t megacmd /MegaVideoServer
+    docker run -p 8080:8080 megacmd
+
+    
+EXPOSE 8080
+CMD ["npm", "start"]
