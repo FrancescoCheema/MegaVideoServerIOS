@@ -12,13 +12,9 @@ CMD ["mega-cmd-server"]
 
 #Install Node.js
 
-RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    npm
-
-RUN apt-get install -y curl \
-    curl -fsSL https://deb.nodesource.com/setup_23.x -o nodesource_setup.sh \
-    -E bash nodesource_setup.sh \
+RUN apt-get update && \
+    apt-get install -y curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_23.x | bash - && \
     apt-get install -y nodejs
 
 RUN docker build -t megacmd /MegaVideoServer \
