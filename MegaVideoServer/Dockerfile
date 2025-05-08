@@ -17,7 +17,7 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/setup_23.x | bash - && \
     apt-get install -y nodejs
 
-RUN npm install
+RUN RUN npm cache clean --force && npm install
     
 EXPOSE 8080
 CMD mega-cmd-server & npm start
