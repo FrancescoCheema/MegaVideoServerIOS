@@ -19,7 +19,7 @@ RUN npm install npm@latest -g && \
     npm install n -g && \
     n latest
 
-RUN docker build -t megacmd /MegaVideoServer
+RUN docker build -t megacmd /MegaVideoServer \
     docker run -p 8080:8080 megacmd
 
     
