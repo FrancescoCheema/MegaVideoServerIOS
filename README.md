@@ -1,67 +1,92 @@
-MegaVideoServerIOS is a Dockerized server solution designed to stream video content directly from your MEGA cloud storage to iOS devices. It leverages MEGAcmd for cloud authentication and file handling, making it an ideal backend for testing or deploying MEGA-hosted videos in mobile apps.
+MegaVideoServerIOS
+MegaVideoServerIOS is a Dockerized server that enables video streaming from your MEGA cloud storage to iOS devices. It uses MEGAcmd to authenticate and access MEGA files and provides a local HTTP interface that allows you to stream videos directly into iOS applications using native playback components like AVPlayer.
 
-⚙️ Features
-🔐 Secure login via MEGAcmd
+Overview
+This project was developed to address the limitations of direct MEGA file access in mobile development environments. By running a lightweight containerized server, developers can test, preview, and stream video content hosted in MEGA within local or emulator-based iOS apps.
 
-☁️ Stream videos directly from MEGA cloud
+Features
+Authenticate to MEGA via MEGAcmd inside Docker
 
-📱 Optimized for iOS video playback
+Stream video files stored in MEGA through a local server
 
-🐳 Docker-ready for easy deployment
+Compatible with AVPlayer and iOS development workflows
 
-🔁 Supports WebDAV and HTTP endpoints for streaming
+Bind video access to localhost or host IP for easy testing
 
-🧰 Technologies Used
-MEGAcmd – CLI tool to interface with MEGA cloud
+Lightweight Express-based server setup
 
-Node.js / Express – Lightweight server
+Technologies
+Docker
 
-Docker – Containerization
+Node.js / Express
 
-WebDAV (optional) – For iOS video access
+MEGAcmd CLI
 
-🚀 Setup & Usage
-1. Clone and Build
+Shell scripting for automation
+
+Getting Started
+Prerequisites
+Docker installed on your system
+
+A MEGA account (with videos uploaded)
+
+MEGAcmd available in the container
+
+Clone the Repository
 bash
 Copy
 Edit
 git clone https://github.com/FrancescoCheema/MegaVideoServerIOS.git
 cd MegaVideoServerIOS
+Build the Docker Image
+bash
+Copy
+Edit
 docker build -t megavideoserver .
-2. Run the Container
+Run the Container
 bash
 Copy
 Edit
-docker run -p 8080:8080 megavideoserver
-3. Login to MEGA (if not automated)
-bash
-Copy
-Edit
-docker exec -it <container_name> mega-login your-email your-password
-Alternatively, modify the container to auto-login using environment variables or MEGAcmd config.
-
-4. Stream Your Videos
-Your videos stored on MEGA will be accessible through the local server. You can stream them in your iOS app using AVPlayer by pointing to:
+docker run -d -p 8080:8080 --name megavideoserver megavideoserver
+Log into MEGA
+You can either configure the container to auto-login or log in manually:
 
 bash
 Copy
 Edit
-http://localhost:8080/your-video.mp4
-Or use WebDAV if you’ve configured it via MEGAcmd:
+docker exec -it megavideoserver mega-login your-email your-password
+Once authenticated, you can fetch or stream videos directly.
+
+Usage
+The server is accessible at http://localhost:8080.
+
+You can extend the Express server inside the container to list available videos, stream individual files, or serve content via MEGA public links or mounted WebDAV paths (if enabled).
+
+In iOS, you can stream a file using the following example with AVPlayer:
+
+swift
+Copy
+Edit
+let player = AVPlayer(url: URL(string: "http://localhost:8080/video.mp4")!)
+Make sure the video file is accessible via MEGAcmd and served through the container’s Express route.
+
+Folder Structure
+Typical layout inside the container:
 
 bash
 Copy
 Edit
-http://localhost:4443/your-mega-folder/video.mp4
-📱 iOS Integration
-Use AVPlayer or any compatible streaming library to play videos from the exposed local/WebDAV URL. Make sure your iOS simulator or device can access the host machine’s IP if not using localhost.
+/app
+  ├── index.js              # Express server entrypoint
+  ├── docker-entrypoint.sh  # MEGAcmd login and setup
+  └── videos/               # Optional mount point or download target from MEGA
+Development Notes
+WebDAV support can be enabled via MEGAcmd if needed
 
-🧪 Development Notes
-MEGAcmd must be running inside the container.
+You can mount a host directory to serve files locally for testing
 
-Consider using mega-export to create public links if sharing outside localhost.
+Consider handling mega-export for public MEGA links if needed
 
-Logs and error handling can be extended via Express middleware.
+License
+This project is open-source and available under the MIT License.
 
-🤝 Contributing
-Pull requests and suggestions are welcome.
