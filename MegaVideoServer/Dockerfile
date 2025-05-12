@@ -25,7 +25,7 @@ RUN apt-get update && \
 # Copy start script and set permissions before switching to non-root
 WORKDIR /app
 # Remove line '/MegaVideoServer' if running locally, use /start.sh /start.sh
-COPY /MegaVideoServer /start.sh   
+COPY /start.sh /start.sh   
 RUN chmod +x /start.sh
 
 # Now create and switch to non-root user
@@ -45,7 +45,9 @@ COPY . .
 
 # Install Node.js dependencies
 USER root
-RUN npm install
+RUN npm install \
+    npm install dotenv \
+    npm install express
 
 # Expose your app's port
 EXPOSE 8080
