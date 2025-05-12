@@ -24,7 +24,7 @@ RUN apt-get update && \
 
 # Copy start script and set permissions before switching to non-root
 WORKDIR /app
-COPY /start.sh /start.sh
+COPY ./start.sh /
 RUN chmod +x /start.sh
 
 # Now create and switch to non-root user
