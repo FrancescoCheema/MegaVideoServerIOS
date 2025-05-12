@@ -4,7 +4,7 @@ MegaVideoServerIOS is a Dockerized server that enables video streaming from your
 
 ## Overview
 
-This project was developed to address the limitations of direct MEGA file access in mobile development environments. By running a lightweight containerized server, developers can test, preview, and stream video content hosted in MEGA within local or emulator-based iOS apps.
+This project was developed to address the limitations of direct MEGA file access in mobile development environments. By running a lightweight containerized server, developers can test, preview, and stream video content hosted in MEGA within local or emulator-based iOS apps. As an example, I have deployed this on Render, soon a Flutter App to connect to it, will be available.
 
 ## Features
 
