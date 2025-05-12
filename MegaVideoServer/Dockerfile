@@ -23,7 +23,7 @@ RUN apt-get update && \
     rm megacmd-Debian_11_amd64.deb
 
 # Copy start script and set permissions before switching to non-root
-COPY ./start.sh /start.sh
+COPY /start.sh ./start.sh
 RUN chmod +x /start.sh
 
 # Now create and switch to non-root user
