@@ -24,7 +24,8 @@ RUN apt-get update && \
 
 # Copy start script and set permissions before switching to non-root
 WORKDIR /app
-COPY /MegaVideoServer start.sh
+# Remove line '/MegaVideoServer' if running locally, use /start.sh /start.sh
+COPY /MegaVideoServer /start.sh   
 RUN chmod +x /start.sh
 
 # Now create and switch to non-root user
@@ -43,11 +44,11 @@ WORKDIR /app
 COPY . .
 
 # Install Node.js dependencies
+USER root
 RUN npm install
 
 # Expose your app's port
 EXPOSE 8080
-EXPOSE 4443
 
 # Start both MEGAcmd and your Node app
 CMD ["/start.sh"]
